@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from dotenv import load_dotenv
 import os
 import requests
@@ -6,10 +6,13 @@ import requests
 app = Flask(__name__)
 load_dotenv(override=True)
 
-@app.route("/")
+@app.route("/", methods=['POST'])
 def hello_world():
-    response = requests.post("http://{}:{}/api/recommend".format(os.getenv('SERVER_NAME'), os.getenv('SERVER_PORT')), json={'corpo': 'corpo da requisicao'})
-    return "mensagem do cliente, com uma variavel de teste <{}> e a resposta do servidor <{}>".format(os.getenv('TESTE'), response.text)
+    request_json_body = request.get_json(force=True)
+    print("-------------------------------------- request json body --------------------------------------")
+    print(request_json_body)
+    response = requests.post("http://{}:{}/api/recommend".format(os.getenv('SERVER_NAME'), os.getenv('SERVER_PORT')), json=request_json_body)
+    return response.json()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=30501,debug=True)

@@ -30,24 +30,24 @@ with open('playlist-sample-ds1.csv','r', encoding="utf8") as data:
                 playlist_songs = [line[5]]
                 previous_pid = current_pid
 
-previous_pid = 0
-playlist_songs = []
-with open('playlist-sample-ds2.csv','r', encoding="utf8") as data:
-   for line in csv.reader(data):
-        if line[0] != 'pid':
-            current_pid = line[0]
-            if current_pid == previous_pid:
-                playlists[-1]['songs'].append(line[5])
+# previous_pid = 0
+# playlist_songs = []
+# with open('playlist-sample-ds2.csv','r', encoding="utf8") as data:
+#    for line in csv.reader(data):
+#         if line[0] != 'pid':
+#             current_pid = line[0]
+#             if current_pid == previous_pid:
+#                 playlists[-1]['songs'].append(line[5])
 
-                playlist_songs.append(line[5])
-            else:
-                if len(playlist_songs) != 0:
-                    itemSetList.append(playlist_songs)
+#                 playlist_songs.append(line[5])
+#             else:
+#                 if len(playlist_songs) != 0:
+#                     itemSetList.append(playlist_songs)
                 
-                playlists.append({'pid': line[0], 'songs': [line[5]]})
+#                 playlists.append({'pid': line[0], 'songs': [line[5]]})
 
-                playlist_songs = [line[5]]
-                previous_pid = current_pid
+#                 playlist_songs = [line[5]]
+#                 previous_pid = current_pid
 
                 
 # print("----------------------------------------------------- item set list -----------------------------------------------------")
@@ -55,7 +55,7 @@ with open('playlist-sample-ds2.csv','r', encoding="utf8") as data:
 # print("----------------------------------------------------- playlists ---------------------------------------------------------")
 # print(playlists)
 
-# rodamos o algoritmo de fpgrouwth e conseguimos um conjunto de regras
+# rodamos o algoritmo de fpgrouwth para obter um conjunto de rules
 # itemSetList = [['eggs', 'bacon', 'soup'],
 #             ['eggs', 'bacon', 'apple'],
 #             ['soup', 'bacon', 'banana']]
@@ -68,9 +68,31 @@ print(rules)
 
 
 @app.route("/api/recommend", methods=['POST'])
-def hello_world():
+def recommend():
     request_json_body = request.get_json(force=True)
-    return "<p>Hello, World!</p> {} {}".format(os.getenv('TESTE'), request_json_body)
+
+    # request_songs_set = set(["Have Yourself A Merry Little Christmas", "Sleigh Ride"])
+    request_songs_set = set(request_json_body["songs"])
+
+    # find rules that are matched by the request's songs. These will be the rules to be used in determining what playlists will be recommended.
+    matched_rules = []
+    for rule in rules:
+        if rule[0].issubset(request_songs_set):
+            matched_rules.append(rule)
+    print("-------------------------------------------------- matched rules -----------------------------------------------------------------")
+    print(matched_rules)
+
+    # if even one matched rule is a subset of the playlist songs, this playlist will be recommended.
+    playlist_pids_to_recommend = []
+    for playlist in playlists:
+        for matched_rule in matched_rules:
+             if matched_rule[1].issubset(set(playlist['songs'])):
+                playlist_pids_to_recommend.append(playlist['pid'])
+                break
+    print("-------------------------------------------------- playlist pids to recommend ----------------------------------------------------")
+    print(playlist_pids_to_recommend)
+
+    return jsonify({"playlist_ids": playlist_pids_to_recommend})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=30502,debug=True)
