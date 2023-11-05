@@ -90,8 +90,8 @@ def recommend():
     for rule in rules_model:
         if rule[0].issubset(request_songs_set):
             matched_rules.append(rule)
-    print("-------------------------------------------------- matched rules -----------------------------------------------------------------")
-    print(matched_rules)
+    #print("-------------------------------------------------- matched rules -----------------------------------------------------------------")
+    #print(matched_rules)
 
     # if even one song from the second item of a matched rule is a subset of the playlist songs, this playlist will be recommended.
     playlist_pids_to_recommend = []
@@ -100,8 +100,8 @@ def recommend():
              if matched_rule[1].issubset(set(playlist['songs'])):
                 playlist_pids_to_recommend.append(playlist['pid'])
                 break
-    print("-------------------------------------------------- playlist pids to recommend ----------------------------------------------------")
-    print(playlist_pids_to_recommend)
+    #print("-------------------------------------------------- playlist pids to recommend ----------------------------------------------------")
+    #print(playlist_pids_to_recommend)
 
     return jsonify({"playlist_ids": playlist_pids_to_recommend, "model_date": model_update_date_as_string})
 
