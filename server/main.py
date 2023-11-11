@@ -106,4 +106,4 @@ def recommend():
     return jsonify({"playlist_ids": playlist_pids_to_recommend, "model_date": model_update_date_as_string})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=30502,debug=True)
+    app.run(host='0.0.0.0',port=32216,debug=True)

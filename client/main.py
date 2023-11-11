@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 load_dotenv(override=True)
 
-@app.route("/", methods=['POST'])
+@app.route("/api/recommender", methods=['POST'])
 def hello_world():
     request_json_body = request.get_json(force=True)
     print("-------------------------------------- request json body --------------------------------------")
@@ -15,4 +15,4 @@ def hello_world():
     return response.json()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=30501,debug=True)
+    app.run(host='0.0.0.0',port=37000,debug=True)
