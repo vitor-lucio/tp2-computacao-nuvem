@@ -2,7 +2,7 @@
 
 ## setup before running containers
 
-docker network create tp2-network
+`docker network create tp2-network`
 
 both server and client folders should have a .env configured just like exemplo.env
 
