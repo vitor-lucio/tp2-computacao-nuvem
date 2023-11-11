@@ -7,5 +7,5 @@ spec:
     app: american-predictor
   ports:
     - protocol: TCP
-      port: 5008
-      targetPort: 5008
+      port: 32216
+      targetPort: 32216
