@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playlist-recommender-deployment
+  labels:
+    app: <user>-playlist-recommender
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: <user>-playlist-recommender
+  template:
+    metadata:
+      labels:
+        app: <user>-playlist-recommender
+    spec:
+      containers:
+      - name: playlist-recommender-container
+        image: your-docker-username/your-docker-image:tag
+        ports:
+        - containerPort: 8080
