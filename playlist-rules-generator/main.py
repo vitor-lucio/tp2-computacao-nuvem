@@ -2,6 +2,12 @@ import os
 from fpgrowth_py import fpgrowth
 import csv
 import pickle
+from flask import Flask
+from dotenv import load_dotenv
+import requests
+
+app = Flask(__name__)
+load_dotenv(override=True)
 
 itemSetList = [] # lista de listas de track_names (nome das musicas) de cada playlist, no formato necessario para rodar o fpgrowth e retornar as regras para recomendacao.
 playlists = [] # lista de objetos representando as playlists, contendo playlist id (pid) e musicas (songs). Necessario para identificar e analisar cada playlist de acordo com as regras geradas para recomendacao
@@ -55,12 +61,19 @@ with open('playlist-sample-ds1.csv','r', encoding="utf8") as data:
 #             ['soup', 'bacon', 'banana']]
 
 freqItemSet, rules = fpgrowth(itemSetList, minSupRatio=0.015, minConf=0.6)
-print("----------------------------------------------------- frequent item set -----------------------------------------------------")
-print(freqItemSet)
-print("----------------------------------------------------- rules -----------------------------------------------------------------")
-print(rules)
+# print("----------------------------------------------------- frequent item set -----------------------------------------------------")
+# print(freqItemSet)
+# print("----------------------------------------------------- rules -----------------------------------------------------------------")
+# print(rules)
 
-#pickle_test = [[{'Someone'}, {'something'}, 0.63], [{'Let it'}, {'Roses'}, 0.87]]
-with open('../server/model.pickle', 'wb') as f:
+with open('model.pickle', 'wb') as f:
     pickle.dump(rules, f)
-    #pickle.dump([[{'HUMBLE.'}, {'XO TOUR Llif3'}, 0.6666666666666666], [{'XO TOUR Llif3'}, {'HUMBLE.'}, 0.6153846153846154]], f)
+    # pickle.dump([[{'HUMBLE.'}, {'XO TOUR Llif3'}, 0.6666666666666666], [{'XO TOUR Llif3'}, {'HUMBLE.'}, 0.6153846153846154]], f)
+
+
+req = requests.post("http://{}:{}/api/model".format(os.getenv('SERVER_NAME'), os.getenv('SERVER_PORT')), files={'file': open('model.pickle', 'rb')})
+
+print(req.content)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0',port=37000,debug=True)

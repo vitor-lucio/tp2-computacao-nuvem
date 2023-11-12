@@ -20,18 +20,13 @@ don't forget to send request with the expected body.
 
 http://127.0.0.1:32216/api/recommend
 
-## client
-`cd client/`
+## playlist-rules-generator
+`cd playlist-rules-generator/`
 
 
-`docker build . -t tp2-client --no-cache`
+`docker build . -t tp2-playlist-rules-generator --no-cache`
 
 
-`docker run -p 37000:37000 --net tp2-network --name tp2-client-container tp2-client`
+`docker run -p 37000:37000 --net tp2-network --name tp2-playlist-rules-generator-container tp2-playlist-rules-generator`
 
-### URL to make requests to client container
-
-server container should be running and client's .env should have the server's container name in SERVER_NAME environment variable.
-don't forget to send request with the expected body.
-
-http://127.0.0.1:37000/api/recommender
+client's .env should have the server's container name in SERVER_NAME environment variable and server's port in SERVER_PORT.

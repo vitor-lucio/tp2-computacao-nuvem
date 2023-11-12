@@ -51,7 +51,14 @@ with open(model_file_path, 'rb') as f:
     rules_model = pickle.load(f)
 
 model_update_date_as_string = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-# model_file_change_time = os.stat(model_file_path).st_ctime
+
+@app.route("/api/model", methods=['POST'])
+def model_update():
+    model = request.files['file']
+
+    model.save(model_file_path)
+
+    return {"message": "file sent sucessfully"}
 
 
 @app.route("/api/recommend", methods=['POST'])
@@ -59,14 +66,6 @@ def recommend():
     global rules_model
     global model_update_date_as_string
     global model_file_change_time
-    # print(os.stat(model_file_path).st_ctime)
-    # print(model_file_change_time)
-    # if model_file_change_time != os.stat(model_file_path).st_ctime:
-    #     print("Updating model")
-    #     with open(model_file_path, 'rb') as f:
-    #         rules_model = pickle.load(f)
-    #     model_update_date_as_string = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-    #     model_file_change_time = os.stat(model_file_path).st_ctime
 
     with open(model_file_path, 'rb') as f:
         new_rules_model = pickle.load(f)
