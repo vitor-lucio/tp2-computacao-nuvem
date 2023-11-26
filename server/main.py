@@ -5,6 +5,9 @@ from fpgrowth_py import fpgrowth
 import csv
 import pickle
 from datetime import datetime
+import time
+
+time.sleep(20)
 
 app = Flask(__name__)
 load_dotenv(override=True)
