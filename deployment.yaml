@@ -18,4 +18,4 @@ spec:
         ports:
         - containerPort: 32216
       - name: playlist-rules-generator
-        image: vitorlucio/tp2-rules-generator
+        image: vitorlucio/tp2-rules-generator:latest
