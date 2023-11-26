@@ -2,11 +2,9 @@
 
 ## setup before running containers
 
-`docker network create tp2-network`
-
 both server and client folders should have a .env configured just like exemplo.env
 
-## server
+## to run server
 
 `cd server/`
 
@@ -20,7 +18,7 @@ don't forget to send request with the expected body.
 
 http://127.0.0.1:32216/api/recommend
 
-## playlist-rules-generator
+## to run playlist-rules-generator
 `cd playlist-rules-generator/`
 
 
