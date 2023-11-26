@@ -6,7 +6,7 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: american-predictor
+      app: vitorlucio-playlist-recommender  # Updated label to match the template
   template:
     metadata:
       labels:
