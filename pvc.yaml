@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: matheussilva
+  name: project2-pv-matheussilva
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  storageClassName: standard
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  hostPath:
+    path: /home/matheussilva/project2-pv
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: playlist-recommender-pod
+spec:
+  containers: 
+  - name: playlist-recommender
+    image: vitorlucio/tp2-server:latest
+    volumeMounts:
+    - name: model
+      mountPath: "/model"
+  - name: playlist-rules-generator
+    image: vitorlucio/tp2-rules-generator:latest
+    volumeMounts:
+    - name: model
+      mountPath: "/model"
+  volumes:
+  - name: model
+    persistentVolumeClaim:
+      claimName: project2-pv-matheussilva

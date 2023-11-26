@@ -1,19 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vitorlucio-playlist-recommender-deployment
+  name: playlist-recommender-deployment
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: vitorlucio-playlist-recommender  # Updated label to match the template
+      app: playlist-recommender  
   template:
     metadata:
       labels:
-        app: vitorlucio-playlist-recommender
+        app: playlist-recommender
     spec:
       containers:
-      - name: vitorlucio-playlist-recommender
+      - name: playlist-recommender
         image: vitorlucio/tp2-server:latest
         ports:
         - containerPort: 32216
+      - name: playlist-rules-generator
+        image: vitorlucio/tp2-rules-generator
