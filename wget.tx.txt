@@ -1,0 +1,5 @@
+wget --server-response \
+    --output-document response.out \
+    --header='Content-Type: application/json' \
+    --post-data '{"songs": ["Black Beatles", "Bounce Back"]}'\
+    http://10.104.167.180:32216/api/recommender

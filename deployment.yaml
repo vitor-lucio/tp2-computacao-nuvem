@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: playlist-recommender-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: playlist-recommender  
@@ -15,7 +15,37 @@ spec:
       containers:
       - name: playlist-recommender
         image: vitorlucio/tp2-server:latest
+        volumeMounts:
+        - name: model
+          mountPath: "/model"
         ports:
         - containerPort: 32216
+      volumes:
+      - name: model
+        persistentVolumeClaim:
+          claimName: project2-pv-matheussilva
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playlist-rules-generator-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playlist-rules-generator  
+  template:
+    metadata:
+      labels:
+        app: playlist-rules-generator
+    spec:
+      containers:
       - name: playlist-rules-generator
         image: vitorlucio/tp2-rules-generator:latest
+        volumeMounts:
+        - name: model
+          mountPath: "/model"
+      volumes:
+      - name: model
+        persistentVolumeClaim:
+           claimName: project2-pv-matheussilva
