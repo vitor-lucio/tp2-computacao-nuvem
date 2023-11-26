@@ -11,54 +11,44 @@ load_dotenv(override=True)
 
 playlists = [] # lista de playlists que serao consideradas para a recomendacao
 
-# atraves de arquivos csv, como os samples de playlist, vai ser criado a lista para geracao das regras de recomendacao e a lista com objetos identificando as playlists e suas musicas
-previous_pid = 0
-playlist_songs = []
-with open('playlist-sample-ds1.csv','r', encoding="utf8") as data:
+with open('2023_spotify_ds1.csv','r', encoding="utf8") as data:
    for line in csv.reader(data):
-        if line[0] != 'pid':
-            current_pid = line[0]
-            if current_pid == previous_pid:
-                playlists[-1]['songs'].append(line[5])
+        if line[6] != 'pid':
+            new_playlist = True
+            for playlist in playlists:
+                if playlist['pid'] == line[6]: # line[6] e a coluna pid do dataset
+                    playlist['songs'].append(line[7]) # line[7] e a coluna track_name do dataset
+                    new_playlist = False
+           
+            if new_playlist: # Se a playlist da linha do dataset não estiver na lista de playlists, criar novo dicionario para esta playlist.
+                playlists.append({'pid': line[6], 'songs': [line[7]]})
+            new_playlist = True
 
-                playlist_songs.append(line[5])
-            else:                
-                playlists.append({'pid': line[0], 'songs': [line[5]]})
-
-                playlist_songs = [line[5]]
-                previous_pid = current_pid
-
-# atraves de arquivos csv, como os samples de playlist, vai ser criado a lista para geracao das regras de recomendacao e a lista com objetos identificando as playlists e suas musicas
-previous_pid = 0
-playlist_songs = []
-with open('playlist-sample-ds2.csv','r', encoding="utf8") as data:
+with open('2023_spotify_ds2.csv','r', encoding="utf8") as data: # mudar arquivo csv para '2023_spotify_ds2.csv' quando for testar a atualizacao do model
    for line in csv.reader(data):
-        if line[0] != 'pid':
-            current_pid = line[0]
-            if current_pid == previous_pid:
-                playlists[-1]['songs'].append(line[5])
+        if line[6] != 'pid':
+            new_playlist = True
+            for playlist in playlists:
+                if playlist['pid'] == line[6]: # line[6] e a coluna pid do dataset
+                    playlist['songs'].append(line[7]) # line[7] e a coluna track_name do dataset
+                    new_playlist = False
+           
+            if new_playlist: # Se a playlist da linha do dataset não estiver na lista de playlists, criar novo dicionario para esta playlist.
+                playlists.append({'pid': line[6], 'songs': [line[7]]})
+            new_playlist = True
 
-                playlist_songs.append(line[5])
-            else:                
-                playlists.append({'pid': line[0], 'songs': [line[5]]})
-
-                playlist_songs = [line[5]]
-                previous_pid = current_pid
+print("----------------------------------------------------- playlists ---------------------------------------------------------")
+print(playlists)
 
 model_file_path = 'model.pickle'
 
 with open(model_file_path, 'rb') as f:
     rules_model = pickle.load(f)
 
+print("----------------------------------------------------- rules model ---------------------------------------------------------")
+print(rules_model)
+
 model_update_date_as_string = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-
-@app.route("/api/model", methods=['POST'])
-def model_update():
-    model = request.files['file']
-
-    model.save(model_file_path)
-
-    return {"message": "file sent sucessfully"}
 
 
 @app.route("/api/recommend", methods=['POST'])
@@ -70,6 +60,7 @@ def recommend():
     with open(model_file_path, 'rb') as f:
         new_rules_model = pickle.load(f)
 
+    # See if new_rules_model is different than rules_model, to check if we need to update the rules_model
     pairs = zip(rules_model, new_rules_model)
     if any(x != y for x, y in pairs):
         print("Updating model")
@@ -79,7 +70,6 @@ def recommend():
 
     request_json_body = request.get_json(force=True)
 
-    # request_songs_set = set(["Have Yourself A Merry Little Christmas", "Sleigh Ride"])
     request_songs_set = set(request_json_body["songs"])
 
     # find rules that are matched by the request's songs. These will be the rules to be used in determining what playlists will be recommended.

@@ -13,7 +13,7 @@ itemSetList = [] # lista de listas de track_names (nome das musicas) de cada pla
 playlists = [] # lista de objetos representando as playlists, contendo playlist id (pid) e musicas (songs). Necessario para identificar e analisar cada playlist de acordo com as regras geradas para recomendacao
 
 # atraves de arquivos csv, como os samples de playlist, vai ser criado a lista para geracao das regras de recomendacao e a lista com objetos identificando as playlists e suas musicas
-with open('2023_spotify_ds1.csv','r', encoding="utf8") as data: # mudar arquivo csv para '2023_spotify_ds2.csv' quando for testar a atualizacao do model
+with open('2023_spotify_ds2.csv','r', encoding="utf8") as data: # mudar arquivo csv para '2023_spotify_ds2.csv' quando for testar a atualizacao do model
    for line in csv.reader(data):
         if line[6] != 'pid':
             new_playlist = True
