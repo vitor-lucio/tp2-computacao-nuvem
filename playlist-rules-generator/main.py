@@ -35,7 +35,7 @@ freqItemSet, rules = fpgrowth(itemSetList, minSupRatio=0.1, minConf=0.82)
 print("----------------------------------------------------- rules -----------------------------------------------------------------")
 print(rules)
 
-with open('/model/model.pickle', 'wb') as f:
+with open('../model/model.pickle', 'wb') as f:
     pickle.dump(rules, f)
 
 if __name__ == '__main__':

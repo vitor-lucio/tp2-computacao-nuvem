@@ -30,7 +30,7 @@ with open('2023_spotify_ds2.csv','r', encoding="utf8") as data:
 # print("----------------------------------------------------- playlists ---------------------------------------------------------")
 # print(playlists)
 
-model_file_path = '/model/model.pickle'
+model_file_path = '../model/model.pickle'
 
 with open(model_file_path, 'rb') as f:
     rules_model = pickle.load(f)
