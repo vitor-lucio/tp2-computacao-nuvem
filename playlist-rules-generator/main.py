@@ -10,28 +10,22 @@ app = Flask(__name__)
 load_dotenv(override=True)
 
 itemSetList = [] # lista de listas de track_names (nome das musicas) de cada playlist, no formato necessario para rodar o fpgrowth e retornar as regras para recomendacao.
-playlists = [] # lista de objetos representando as playlists, contendo playlist id (pid) e musicas (songs). Necessario para identificar e analisar cada playlist de acordo com as regras geradas para recomendacao
+playlists = {}
 
-# atraves de arquivos csv, como os samples de playlist, vai ser criado a lista para geracao das regras de recomendacao e a lista com objetos identificando as playlists e suas musicas
-with open('2023_spotify_ds2.csv','r', encoding="utf8") as data: # mudar arquivo csv para '2023_spotify_ds2.csv' quando for testar a atualizacao do model
+
+with open('2023_spotify_ds2.csv','r', encoding="utf8") as data:
    for line in csv.reader(data):
         if line[6] != 'pid':
-            new_playlist = True
-            for playlist in playlists:
-                if playlist['pid'] == line[6]: # line[6] e a coluna pid do dataset
-                    playlist['songs'].append(line[7]) # line[7] e a coluna track_name do dataset
-                    new_playlist = False
-           
-            if new_playlist: # Se a playlist da linha do dataset não estiver na lista de playlists, criar novo dicionario para esta playlist.
-                playlists.append({'pid': line[6], 'songs': [line[7]]})
-            new_playlist = True
-           
+            if line[6] in playlists: # line[6] e a coluna pid do dataset
+                playlists[line[6]].append(line[7]) # line[7] e a coluna track_name do dataset
+            else:
+                playlists[line[6]] = [line[7]]
 
 # print("----------------------------------------------------- playlists ---------------------------------------------------------")
 # print(playlists)
 
-for playlist in playlists:
-     itemSetList.append(playlist['songs'])
+for key in playlists:
+     itemSetList.append(playlists[key])
                 
 # print("----------------------------------------------------- item set list -----------------------------------------------------")
 # print(itemSetList)

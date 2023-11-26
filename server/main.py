@@ -9,36 +9,26 @@ from datetime import datetime
 app = Flask(__name__)
 load_dotenv(override=True)
 
-playlists = [] # lista de playlists que serao consideradas para a recomendacao
+playlists = {}
 
 with open('2023_spotify_ds1.csv','r', encoding="utf8") as data:
    for line in csv.reader(data):
         if line[6] != 'pid':
-            new_playlist = True
-            for playlist in playlists:
-                if playlist['pid'] == line[6]: # line[6] e a coluna pid do dataset
-                    playlist['songs'].append(line[7]) # line[7] e a coluna track_name do dataset
-                    new_playlist = False
-           
-            if new_playlist: # Se a playlist da linha do dataset não estiver na lista de playlists, criar novo dicionario para esta playlist.
-                playlists.append({'pid': line[6], 'songs': [line[7]]})
-            new_playlist = True
+            if line[6] in playlists: # line[6] e a coluna pid do dataset
+                playlists[line[6]].append(line[7]) # line[7] e a coluna track_name do dataset
+            else:
+                playlists[line[6]] = [line[7]]
 
-with open('2023_spotify_ds2.csv','r', encoding="utf8") as data: # mudar arquivo csv para '2023_spotify_ds2.csv' quando for testar a atualizacao do model
+with open('2023_spotify_ds2.csv','r', encoding="utf8") as data:
    for line in csv.reader(data):
         if line[6] != 'pid':
-            new_playlist = True
-            for playlist in playlists:
-                if playlist['pid'] == line[6]: # line[6] e a coluna pid do dataset
-                    playlist['songs'].append(line[7]) # line[7] e a coluna track_name do dataset
-                    new_playlist = False
-           
-            if new_playlist: # Se a playlist da linha do dataset não estiver na lista de playlists, criar novo dicionario para esta playlist.
-                playlists.append({'pid': line[6], 'songs': [line[7]]})
-            new_playlist = True
+            if line[6] in playlists: # line[6] e a coluna pid do dataset
+                playlists[line[6]].append(line[7]) # line[7] e a coluna track_name do dataset
+            else:
+                playlists[line[6]] = [line[7]]
 
-print("----------------------------------------------------- playlists ---------------------------------------------------------")
-print(playlists)
+# print("----------------------------------------------------- playlists ---------------------------------------------------------")
+# print(playlists)
 
 model_file_path = 'model.pickle'
 
@@ -77,18 +67,18 @@ def recommend():
     for rule in rules_model:
         if rule[0].issubset(request_songs_set):
             matched_rules.append(rule)
-    #print("-------------------------------------------------- matched rules -----------------------------------------------------------------")
-    #print(matched_rules)
+    print("-------------------------------------------------- matched rules -----------------------------------------------------------------")
+    print(matched_rules)
 
     # if even one song from the second item of a matched rule is a subset of the playlist songs, this playlist will be recommended.
     playlist_pids_to_recommend = []
-    for playlist in playlists:
+    for key in playlists:
         for matched_rule in matched_rules:
-             if matched_rule[1].issubset(set(playlist['songs'])):
-                playlist_pids_to_recommend.append(playlist['pid'])
-                break
-    #print("-------------------------------------------------- playlist pids to recommend ----------------------------------------------------")
-    #print(playlist_pids_to_recommend)
+            if matched_rule[1].issubset(set(playlists[key])):
+               playlist_pids_to_recommend.append(key)
+               break
+    print("-------------------------------------------------- playlist pids to recommend ----------------------------------------------------")
+    print(playlist_pids_to_recommend)
 
     return jsonify({"playlist_ids": playlist_pids_to_recommend, "model_date": model_update_date_as_string})
 
