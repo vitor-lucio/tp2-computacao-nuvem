@@ -1,10 +1,11 @@
 FROM python:3.8-slim-buster
 
-WORKDIR /code
 COPY ../requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
 COPY . .
+RUN mkdir /model
+
 EXPOSE 32216
 
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port", "32216"]

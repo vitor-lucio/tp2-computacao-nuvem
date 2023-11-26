@@ -30,7 +30,7 @@ with open('2023_spotify_ds2.csv','r', encoding="utf8") as data:
 # print("----------------------------------------------------- playlists ---------------------------------------------------------")
 # print(playlists)
 
-model_file_path = 'model.pickle'
+model_file_path = '/model/model.pickle'
 
 with open(model_file_path, 'rb') as f:
     rules_model = pickle.load(f)
@@ -41,7 +41,7 @@ print(rules_model)
 model_update_date_as_string = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
 
-@app.route("/api/recommend", methods=['POST'])
+@app.route("/api/recommender", methods=['POST'])
 def recommend():
     global rules_model
     global model_update_date_as_string
