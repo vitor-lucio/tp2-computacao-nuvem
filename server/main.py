@@ -92,5 +92,10 @@ def recommend():
 
     return jsonify({"playlist_ids": playlist_pids_to_recommend, "model_date": model_update_date_as_string})
 
+
+@app.route("/api/ping", methods=['GET'])
+def ping():
+    return 'Pong!'
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=32216,debug=True)
