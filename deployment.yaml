@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: american-predictor-deployment
+  name: vitorlucio-playlist-recommender-deployment
 spec:
   replicas: 2
   selector:
@@ -13,7 +13,7 @@ spec:
         app: vitorlucio-playlist-recommender
     spec:
       containers:
-      - name: american-predictor
+      - name: vitorlucio-playlist-recommender
         image: vitorlucio/tp2-server:latest
         ports:
         - containerPort: 32216
