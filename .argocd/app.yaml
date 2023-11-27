@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-app
+  namespace: matheussilva
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+    path: my-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: matheussilva
+  syncPolicy:
+    automated:
+      prune: true  # Automatically prune resources not present in the Git repository
