@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: playlist-recommender-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: playlist-recommender  
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: playlist-recommender
-        image: vitorlucio/tp2-server:0.1
+        image: vitorlucio/tp2-server:0.2
         volumeMounts:
         - name: model
           mountPath: "/model"
@@ -22,7 +22,7 @@ spec:
         - containerPort: 32216
         env:
         - name: VERSION
-          value: "0.1"
+          value: "0.2"
         - name: FLASK_APP
           value: main
       volumes:
