@@ -83,7 +83,7 @@ def recommend():
     print("-------------------------------------------------- playlist pids to recommend ----------------------------------------------------")
     print(playlist_pids_to_recommend)
 
-    return jsonify({"playlist_ids": playlist_pids_to_recommend, "model_date": model_update_date_as_string})
+    return jsonify({"playlist_ids": playlist_pids_to_recommend, "model_date": model_update_date_as_string, "version": os.getenv('VERSION')})
 
 
 @app.route("/api/ping", methods=['GET'])
