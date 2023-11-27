@@ -1,3 +1,4 @@
+#teste argocd
 wget --server-response \
     --output-document response.out \
     --header='Content-Type: application/json' \
