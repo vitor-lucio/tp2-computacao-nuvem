@@ -8,9 +8,7 @@ if running locally, playlist-rules-generator should have a .env configured (main
 
 `cd playlist-rules-generator/`
 
-
 `docker build . -t vitorlucio/tp2-rules-generator:latest --no-cache`
-
 
 `docker push vitorlucio/tp2-rules-generator:latest`
 
