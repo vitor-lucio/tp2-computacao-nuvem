@@ -45,6 +45,9 @@ spec:
         volumeMounts:
         - name: model
           mountPath: "/model"
+        env:
+        - name: DATASET_NAME
+          value: "2023_spotify_ds2.csv"
       volumes:
       - name: model
         persistentVolumeClaim:

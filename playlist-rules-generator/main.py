@@ -12,8 +12,8 @@ load_dotenv(override=True)
 itemSetList = [] # lista de listas de track_names (nome das musicas) de cada playlist, no formato necessario para rodar o fpgrowth e retornar as regras para recomendacao.
 playlists = {}
 
-
-with open('2023_spotify_ds2.csv','r', encoding="utf8") as data:
+# variavel de ambiente vem do deployments.yaml
+with open(os.getenv('DATASET_NAME'),'r', encoding="utf8") as data: # with open('2023_spotify_ds2.csv','r', encoding="utf8") as data:
    for line in csv.reader(data):
         if line[6] != 'pid':
             if line[6] in playlists: # line[6] e a coluna pid do dataset
