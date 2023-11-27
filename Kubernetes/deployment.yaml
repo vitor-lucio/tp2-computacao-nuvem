@@ -14,12 +14,15 @@ spec:
     spec:
       containers:
       - name: playlist-recommender
-        image: vitorlucio/tp2-server:latest
+        image: vitorlucio/tp2-server:0.1
         volumeMounts:
         - name: model
           mountPath: "/model"
         ports:
         - containerPort: 32216
+        env:
+        - name: VERSION
+          value: "0.1"
       volumes:
       - name: model
         persistentVolumeClaim:
