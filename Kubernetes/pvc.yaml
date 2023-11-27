@@ -12,3 +12,4 @@ spec:
   storageClassName: standard
   accessModes:
     - ReadWriteMany
+  volumeName: project2-pv-matheusilva
