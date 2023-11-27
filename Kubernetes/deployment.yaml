@@ -23,6 +23,8 @@ spec:
         env:
         - name: VERSION
           value: "0.1"
+        - name: FLASK_APP
+          value: main
       volumes:
       - name: model
         persistentVolumeClaim:
@@ -51,6 +53,8 @@ spec:
         env:
         - name: DATASET_NAME
           value: "2023_spotify_ds1.csv"
+        - name: FLASK_APP
+          value: main
       volumes:
       - name: model
         persistentVolumeClaim:
