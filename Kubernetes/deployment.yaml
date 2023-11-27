@@ -31,7 +31,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: playlist-rules-generator-deployment-1
+  name: playlist-rules-generator-deployment
 spec:
   replicas: 1
   selector:
@@ -50,7 +50,7 @@ spec:
           mountPath: "/model"
         env:
         - name: DATASET_NAME
-          value: "2023_spotify_ds1.csv"
+          value: "2023_spotify_ds2.csv"
       volumes:
       - name: model
         persistentVolumeClaim:
