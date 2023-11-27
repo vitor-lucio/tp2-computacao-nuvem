@@ -1,0 +1,281 @@
+metadata:
+  creationTimestamp: "2023-11-27T01:13:59Z"
+  generation: 581
+  managedFields:
+  - apiVersion: argoproj.io/v1alpha1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        .: {}
+        f:destination:
+          .: {}
+          f:namespace: {}
+          f:server: {}
+        f:project: {}
+        f:source:
+          .: {}
+          f:path: {}
+          f:repoURL: {}
+        f:syncPolicy:
+          .: {}
+          f:automated:
+            .: {}
+            f:prune: {}
+      f:status:
+        .: {}
+        f:health: {}
+        f:summary: {}
+        f:sync:
+          .: {}
+          f:comparedTo:
+            .: {}
+            f:destination: {}
+            f:source: {}
+    manager: argocd-server
+    operation: Update
+    time: "2023-11-27T20:19:49Z"
+  - apiVersion: argoproj.io/v1alpha1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:controllerNamespace: {}
+        f:health:
+          f:status: {}
+        f:history: {}
+        f:operationState:
+          .: {}
+          f:finishedAt: {}
+          f:message: {}
+          f:operation:
+            .: {}
+            f:initiatedBy:
+              .: {}
+              f:automated: {}
+            f:retry:
+              .: {}
+              f:limit: {}
+            f:sync:
+              .: {}
+              f:prune: {}
+              f:revision: {}
+          f:phase: {}
+          f:startedAt: {}
+          f:syncResult:
+            .: {}
+            f:resources: {}
+            f:revision: {}
+            f:source:
+              .: {}
+              f:path: {}
+              f:repoURL: {}
+        f:reconciledAt: {}
+        f:resources: {}
+        f:sourceType: {}
+        f:summary:
+          f:images: {}
+        f:sync:
+          f:comparedTo:
+            f:destination:
+              f:namespace: {}
+              f:server: {}
+            f:source:
+              f:path: {}
+              f:repoURL: {}
+          f:revision: {}
+          f:status: {}
+    manager: argocd-application-controller
+    operation: Update
+    time: "2023-11-27T20:41:41Z"
+  name: vitormatheusargocd
+  namespace: argocd
+  resourceVersion: "1968618"
+  uid: dad7ec72-97d4-4d12-8b45-f053465d9847
+spec:
+  destination:
+    namespace: matheussilva
+    server: https://kubernetes.default.svc
+  project: matheussilva-project
+  source:
+    path: Kubernetes
+    repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  syncPolicy:
+    automated:
+      prune: true
+status:
+  controllerNamespace: argocd
+  health:
+    status: Progressing
+  history:
+  - deployStartedAt: "2023-11-27T19:22:44Z"
+    deployedAt: "2023-11-27T19:22:44Z"
+    id: 11
+    revision: 3ca699aa0bfdfd570cbeb46a91d7f2183bac3420
+    source:
+      path: Kubernetes
+      repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  - deployStartedAt: "2023-11-27T19:24:16Z"
+    deployedAt: "2023-11-27T19:24:16Z"
+    id: 12
+    revision: 3ca699aa0bfdfd570cbeb46a91d7f2183bac3420
+    source:
+      path: Kubernetes
+      repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  - deployStartedAt: "2023-11-27T19:28:31Z"
+    deployedAt: "2023-11-27T19:28:32Z"
+    id: 13
+    revision: 3ca699aa0bfdfd570cbeb46a91d7f2183bac3420
+    source:
+      path: Kubernetes
+      repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  - deployStartedAt: "2023-11-27T19:33:26Z"
+    deployedAt: "2023-11-27T19:33:26Z"
+    id: 14
+    revision: 3ca699aa0bfdfd570cbeb46a91d7f2183bac3420
+    source:
+      path: Kubernetes
+      repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  - deployStartedAt: "2023-11-27T19:40:38Z"
+    deployedAt: "2023-11-27T19:40:38Z"
+    id: 15
+    revision: 3ca699aa0bfdfd570cbeb46a91d7f2183bac3420
+    source:
+      path: Kubernetes
+      repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  - deployStartedAt: "2023-11-27T19:44:20Z"
+    deployedAt: "2023-11-27T19:44:20Z"
+    id: 16
+    revision: 3ca699aa0bfdfd570cbeb46a91d7f2183bac3420
+    source:
+      path: Kubernetes
+      repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  - deployStartedAt: "2023-11-27T20:02:43Z"
+    deployedAt: "2023-11-27T20:02:43Z"
+    id: 17
+    revision: 436adf065d6e2f662e344bad1abac40735d6c650
+    source:
+      path: Kubernetes
+      repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  - deployStartedAt: "2023-11-27T20:15:46Z"
+    deployedAt: "2023-11-27T20:15:46Z"
+    id: 18
+    revision: 436adf065d6e2f662e344bad1abac40735d6c650
+    source:
+      path: Kubernetes
+      repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  - deployStartedAt: "2023-11-27T20:19:49Z"
+    deployedAt: "2023-11-27T20:19:49Z"
+    id: 19
+    revision: 436adf065d6e2f662e344bad1abac40735d6c650
+    source:
+      path: Kubernetes
+      repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  - deployStartedAt: "2023-11-27T20:26:42Z"
+    deployedAt: "2023-11-27T20:26:43Z"
+    id: 20
+    revision: 13c1df4ab103555796c127ba55ca2d066e26644f
+    source:
+      path: Kubernetes
+      repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  operationState:
+    finishedAt: "2023-11-27T20:26:43Z"
+    message: successfully synced (all tasks run)
+    operation:
+      initiatedBy:
+        automated: true
+      retry:
+        limit: 5
+      sync:
+        prune: true
+        revision: 13c1df4ab103555796c127ba55ca2d066e26644f
+    phase: Succeeded
+    startedAt: "2023-11-27T20:26:42Z"
+    syncResult:
+      resources:
+      - group: ""
+        hookPhase: Running
+        kind: PersistentVolumeClaim
+        message: persistentvolumeclaim/project2-pv-matheussilva unchanged
+        name: project2-pv-matheussilva
+        namespace: matheussilva
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: ""
+        hookPhase: Running
+        kind: Service
+        message: service/playlist-recommender-service unchanged
+        name: playlist-recommender-service
+        namespace: matheussilva
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apps
+        hookPhase: Running
+        kind: Deployment
+        message: deployment.apps/playlist-rules-generator-deployment configured
+        name: playlist-rules-generator-deployment
+        namespace: matheussilva
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apps
+        hookPhase: Running
+        kind: Deployment
+        message: deployment.apps/playlist-recommender-deployment configured
+        name: playlist-recommender-deployment
+        namespace: matheussilva
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      revision: 13c1df4ab103555796c127ba55ca2d066e26644f
+      source:
+        path: Kubernetes
+        repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+  reconciledAt: "2023-11-27T20:41:41Z"
+  resources:
+  - health:
+      message: Pending deletion
+      status: Progressing
+    kind: PersistentVolumeClaim
+    name: project2-pv-matheussilva
+    namespace: matheussilva
+    status: Synced
+    version: v1
+  - health:
+      status: Healthy
+    kind: Service
+    name: playlist-recommender-service
+    namespace: matheussilva
+    status: Synced
+    version: v1
+  - group: apps
+    health:
+      status: Healthy
+    kind: Deployment
+    name: playlist-recommender-deployment
+    namespace: matheussilva
+    status: Synced
+    version: v1
+  - group: apps
+    health:
+      status: Healthy
+    kind: Deployment
+    name: playlist-rules-generator-deployment
+    namespace: matheussilva
+    status: Synced
+    version: v1
+  sourceType: Directory
+  summary:
+    images:
+    - vitorlucio/tp2-rules-generator:latest
+    - vitorlucio/tp2-server:0.1
+  sync:
+    comparedTo:
+      destination:
+        namespace: matheussilva
+        server: https://kubernetes.default.svc
+      source:
+        path: Kubernetes
+        repoURL: https://github.com/vitor-lucio/tp2-computacao-nuvem.git
+    revision: 13c1df4ab103555796c127ba55ca2d066e26644f
+    status: Synced
