@@ -5,25 +5,29 @@ import pickle
 from flask import Flask
 from dotenv import load_dotenv
 import requests
+import io
+
+# variaveis de ambiente usadas (pode criar um .env com essas variaveis para rodar local)
+# DATASET_NAME --> valor deve ser um dataset presente na URL https://homepages.dcc.ufmg.br/~cunha/hosted/cloudcomp-2023s2-datasets/, ele e passado no deployment.yaml
 
 app = Flask(__name__)
 load_dotenv(override=True)
 
-itemSetList = [] # lista de listas de track_names (nome das musicas) de cada playlist, no formato necessario para rodar o fpgrowth e retornar as regras para recomendacao.
-playlists = {}
+playlist_dataset_response = requests.get("https://homepages.dcc.ufmg.br/~cunha/hosted/cloudcomp-2023s2-datasets/{}".format(os.getenv('DATASET_NAME')), verify=False)
+playlist_dataset_csv = io.StringIO(playlist_dataset_response.text)
 
-# variavel de ambiente vem do deployments.yaml
-with open(os.getenv('DATASET_NAME'),'r', encoding="utf8") as data: # with open('2023_spotify_ds2.csv','r', encoding="utf8") as data:
-   for line in csv.reader(data):
-        if line[6] != 'pid':
-            if line[6] in playlists: # line[6] e a coluna pid do dataset
-                playlists[line[6]].append(line[7]) # line[7] e a coluna track_name do dataset
-            else:
-                playlists[line[6]] = [line[7]]
+playlists = {}
+for line in csv.reader(playlist_dataset_csv):
+     if line[6] != 'pid':
+         if line[6] in playlists: # line[6] e a coluna pid do dataset
+             playlists[line[6]].append(line[7]) # line[7] e a coluna track_name do dataset
+         else:
+             playlists[line[6]] = [line[7]]
 
 # print("----------------------------------------------------- playlists ---------------------------------------------------------")
 # print(playlists)
 
+itemSetList = [] # lista de listas de track_names (nome das musicas) de cada playlist, no formato necessario para rodar o fpgrowth e retornar as regras para recomendacao.
 for key in playlists:
      itemSetList.append(playlists[key])
                 

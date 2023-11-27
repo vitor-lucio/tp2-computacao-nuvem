@@ -1,30 +1,44 @@
 # readme
 
-## setup before running containers
+playlist-rules-generator and server are built and pushed manually.
 
-both server and client folders should have a .env configured just like exemplo.env
+## to build and push playlist-rules-generator
 
-## to run server
+if running locally, playlist-rules-generator should have a .env configured (main.py explains what env variables are needed)
 
-`cd server/`
-
-`docker build . -t tp2-server --no-cache`
-
-`docker run -p 32216:32216 --name tp2-server-container tp2-server`
-
-### URL to make requests to server container
-
-don't forget to send request with the expected body.
-
-http://127.0.0.1:32216/api/recommend
-
-## to run playlist-rules-generator
 `cd playlist-rules-generator/`
 
 
-`docker build . -t tp2-playlist-rules-generator --no-cache`
+`docker build . -t vitorlucio/tp2-rules-generator:latest --no-cache`
 
 
-`docker run --name tp2-playlist-rules-generator-container tp2-playlist-rules-generator`
+`docker push vitorlucio/tp2-rules-generator:latest`
 
-client's .env should have the server's container name in SERVER_NAME environment variable and server's port in SERVER_PORT.
+## to build and push server
+
+if running locally, server should have a .env configured (main.py explains what env variables are needed)
+
+`cd server/`
+
+`docker build . -t vitorlucio/tp2-server:<same_tag_as_in_deployment.yaml> --no-cache`
+
+`docker push vitorlucio/tp2-server:<same_tag_as_in_deployment.yaml>`
+
+## to run client
+
+client should have a .env file like the exemplo.env file inside the client folder, containing the server's reachable host in SERVER_NAME and server's reachable port in SERVER_PORT.
+
+The server port in kubernetes is 32216, which is the allocated port for user vitorlucio, one of the 2 students working on this TP.
+
+`cd client/`
+
+run with `python main.py`
+
+### URL to make requests to the client
+
+The client has the endpoint `http://127.0.0.1:5000/callserver`, that will expect a POST request containing a json body like this:
+```json
+{
+    "songs": ["Black Beatles", "Bounce Back"]
+}
+```

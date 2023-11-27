@@ -6,6 +6,11 @@ import csv
 import pickle
 from datetime import datetime
 import time
+import requests
+import io
+
+# variaveis de ambiente usadas (pode criar um .env com essas variaveis para rodar local)
+# VERSION --> valor pode ser qualquer string, ela existe apenas para pegar alteracoes manuais de versao feitas no deployment.yaml e retornar na resposta do server
 
 time.sleep(20)
 
@@ -14,21 +19,25 @@ load_dotenv(override=True)
 
 playlists = {}
 
-with open('2023_spotify_ds1.csv','r', encoding="utf8") as data:
-   for line in csv.reader(data):
-        if line[6] != 'pid':
-            if line[6] in playlists: # line[6] e a coluna pid do dataset
-                playlists[line[6]].append(line[7]) # line[7] e a coluna track_name do dataset
-            else:
-                playlists[line[6]] = [line[7]]
+playlist_dataset_1_response = requests.get("https://homepages.dcc.ufmg.br/~cunha/hosted/cloudcomp-2023s2-datasets/2023_spotify_ds1.csv", verify=False)
+playlist_dataset_1_csv = io.StringIO(playlist_dataset_1_response.text)
 
-with open('2023_spotify_ds2.csv','r', encoding="utf8") as data:
-   for line in csv.reader(data):
-        if line[6] != 'pid':
-            if line[6] in playlists: # line[6] e a coluna pid do dataset
-                playlists[line[6]].append(line[7]) # line[7] e a coluna track_name do dataset
-            else:
-                playlists[line[6]] = [line[7]]
+for line in csv.reader(playlist_dataset_1_csv):
+     if line[6] != 'pid':
+         if line[6] in playlists: # line[6] e a coluna pid do dataset
+             playlists[line[6]].append(line[7]) # line[7] e a coluna track_name do dataset
+         else:
+             playlists[line[6]] = [line[7]]
+
+playlist_dataset_2_response = requests.get("https://homepages.dcc.ufmg.br/~cunha/hosted/cloudcomp-2023s2-datasets/2023_spotify_ds2.csv", verify=False)
+playlist_dataset_2_csv = io.StringIO(playlist_dataset_2_response.text)
+
+for line in csv.reader(playlist_dataset_2_csv):
+     if line[6] != 'pid':
+         if line[6] in playlists: # line[6] e a coluna pid do dataset
+             playlists[line[6]].append(line[7]) # line[7] e a coluna track_name do dataset
+         else:
+             playlists[line[6]] = [line[7]]
 
 # print("----------------------------------------------------- playlists ---------------------------------------------------------")
 # print(playlists)
